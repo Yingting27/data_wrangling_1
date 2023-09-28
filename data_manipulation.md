@@ -57,6 +57,8 @@ pups_df = janitor::clean_names(litters_df)
 `select` is used to select colunms!
 
 ``` r
+#in these functions, i dont save any thing, like x=...select..., just apply the fucntions for couple times
+
 select(litters_df, group, litter_number, gd0_weight)
 ```
 
@@ -347,3 +349,190 @@ select(pups_df, litter_number, sex, pd_ears)
     ##  9 #4/2/95/3-3       1       4
     ## 10 #2/2/95/3-2       1       4
     ## # ℹ 303 more rows
+
+## `filter`
+
+get rid of rows using `filter()`
+
+``` r
+filter(litters_df, group == "Con7")
+```
+
+    ## # A tibble: 7 × 8
+    ##   group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                   19.7        34.7          20               3
+    ## 2 Con7  #1/2/95/2             27          42            19               8
+    ## 3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ## 4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ## 5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ## 6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ## 7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#group is a variable in the data frame, i want to keep everywhere that variable is equal to this specific value.
+
+#"=" means put this value into the variable, "=="check whether or not this thing is true
+
+#filter function would keep allt the variable that group == "Con7" turns out to be true, get rid of those that are not true
+
+filter(litters_df, group == "Mod8")
+```
+
+    ## # A tibble: 7 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Mod8  #97                 24.5        42.8          20               8
+    ## 2 Mod8  #5/93               NA          41.1          20              11
+    ## 3 Mod8  #5/93/2             NA          NA            19               8
+    ## 4 Mod8  #7/82-3-2           26.9        43.2          20               7
+    ## 5 Mod8  #7/110/3-2          27.5        46            19               8
+    ## 6 Mod8  #2/95/2             28.5        44.5          20               9
+    ## 7 Mod8  #82/4               33.4        52.7          20               8
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+filter(litters_df, group != "Con7")
+```
+
+    ## # A tibble: 42 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con8  #3/83/3-3             NA          NA            20               9
+    ##  2 Con8  #2/95/3               NA          NA            20               8
+    ##  3 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ##  4 Con8  #5/4/3/83/3           28          NA            19               9
+    ##  5 Con8  #1/6/2/2/95-2         NA          NA            20               7
+    ##  6 Con8  #3/5/3/83/3-3-2       NA          NA            20               8
+    ##  7 Con8  #2/2/95/2             NA          NA            19               5
+    ##  8 Con8  #3/6/2/2/95-3         NA          NA            20               7
+    ##  9 Mod7  #59                   17          33.4          19               8
+    ## 10 Mod7  #103                  21.4        42.1          19               9
+    ## # ℹ 32 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#not equal
+
+filter(litters_df, gd0_weight > 20)
+```
+
+    ## # A tibble: 30 × 8
+    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #1/2/95/2           27          42            19               8
+    ##  2 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ##  3 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ##  4 Con8  #3/5/2/2/95         28.5        NA            20               8
+    ##  5 Con8  #5/4/3/83/3         28          NA            19               9
+    ##  6 Mod7  #103                21.4        42.1          19               9
+    ##  7 Mod7  #3/82/3-2           28          45.9          20               5
+    ##  8 Mod7  #4/2/95/2           23.5        NA            19               9
+    ##  9 Mod7  #5/3/83/5-2         22.6        37            19               5
+    ## 10 Mod7  #106                21.7        37.8          20               5
+    ## # ℹ 20 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+filter(litters_df, gd0_weight <= 20)
+```
+
+    ## # A tibble: 4 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                 19.7        34.7          20               3
+    ## 2 Mod7  #59                 17          33.4          19               8
+    ## 3 Mod7  #62                 19.5        35.9          19               7
+    ## 4 Low8  #100                20          39.2          20               8
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+filter(litters_df, group == "Con7" | group == "Con8")
+```
+
+    ## # A tibble: 15 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2             27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 Con8  #3/83/3-3             NA          NA            20               9
+    ##  9 Con8  #2/95/3               NA          NA            20               8
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ## 11 Con8  #5/4/3/83/3           28          NA            19               9
+    ## 12 Con8  #1/6/2/2/95-2         NA          NA            20               7
+    ## 13 Con8  #3/5/3/83/3-3-2       NA          NA            20               8
+    ## 14 Con8  #2/2/95/2             NA          NA            19               5
+    ## 15 Con8  #3/6/2/2/95-3         NA          NA            20               7
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#if the former is true or the latter is true, then keep result
+
+filter(litters_df, group %in% c("Con7","Con8"))
+```
+
+    ## # A tibble: 15 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2             27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 Con8  #3/83/3-3             NA          NA            20               9
+    ##  9 Con8  #2/95/3               NA          NA            20               8
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ## 11 Con8  #5/4/3/83/3           28          NA            19               9
+    ## 12 Con8  #1/6/2/2/95-2         NA          NA            20               7
+    ## 13 Con8  #3/5/3/83/3-3-2       NA          NA            20               8
+    ## 14 Con8  #2/2/95/2             NA          NA            19               5
+    ## 15 Con8  #3/6/2/2/95-3         NA          NA            20               7
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#they get the same result
+
+filter(litters_df, !(group == "Con7"))
+```
+
+    ## # A tibble: 42 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con8  #3/83/3-3             NA          NA            20               9
+    ##  2 Con8  #2/95/3               NA          NA            20               8
+    ##  3 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ##  4 Con8  #5/4/3/83/3           28          NA            19               9
+    ##  5 Con8  #1/6/2/2/95-2         NA          NA            20               7
+    ##  6 Con8  #3/5/3/83/3-3-2       NA          NA            20               8
+    ##  7 Con8  #2/2/95/2             NA          NA            19               5
+    ##  8 Con8  #3/6/2/2/95-3         NA          NA            20               7
+    ##  9 Mod7  #59                   17          33.4          19               8
+    ## 10 Mod7  #103                  21.4        42.1          19               9
+    ## # ℹ 32 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+filter(litters_df, group %in% c("Con7", "Con8"), gd0_weight > 20)
+```
+
+    ## # A tibble: 5 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #1/2/95/2           27          42            19               8
+    ## 2 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## 3 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ## 4 Con8  #3/5/2/2/95         28.5        NA            20               8
+    ## 5 Con8  #5/4/3/83/3         28          NA            19               9
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+#do multiple things
+```

@@ -27,6 +27,8 @@ pups_df = janitor::clean_names(litters_df)
 `select` is used to select colunms!
 
 ```{r}
+#in these functions, i dont save any thing, like x=...select..., just apply the fucntions for couple times
+
 select(litters_df, group, litter_number, gd0_weight)
 #this select function can get colunms in one data
 
@@ -80,5 +82,38 @@ pups_df=
 pups_df = janitor::clean_names(pups_df)
 
 select(pups_df, litter_number, sex, pd_ears)
+```
+
+## `filter`
+
+get rid of rows using `filter()`
+
+```{r}
+filter(litters_df, group == "Con7")
+#group is a variable in the data frame, i want to keep everywhere that variable is equal to this specific value.
+
+#"=" means put this value into the variable, "=="check whether or not this thing is true
+
+#filter function would keep allt the variable that group == "Con7" turns out to be true, get rid of those that are not true
+
+filter(litters_df, group == "Mod8")
+
+filter(litters_df, group != "Con7")
+#not equal
+
+filter(litters_df, gd0_weight > 20)
+
+filter(litters_df, gd0_weight <= 20)
+
+filter(litters_df, group == "Con7" | group == "Con8")
+#if the former is true or the latter is true, then keep result
+
+filter(litters_df, group %in% c("Con7","Con8"))
+#they get the same result
+
+filter(litters_df, !(group == "Con7"))
+
+filter(litters_df, group %in% c("Con7", "Con8"), gd0_weight > 20)
+#do multiple things
 ```
 
