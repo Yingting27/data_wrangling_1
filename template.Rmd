@@ -48,5 +48,40 @@ Import the same dataset using an absolute path.
 # litters_df_abs = 
 #  janitor::clean_names(litters_df_abs)
 ```
+```{r}
+pups_df=
+  read_csv("data/FAS_pups.csv")
+pups_df = 
+  janitor::clean_names(pups_df)
 
+```
+
+
+## look at data
+
+```{r}
+litters_df
+
+head(litters_df)
+#print the first six rows instead of first 10 rows
+
+tail(litters_df)
+#the bottom rows
+```
+
+you can use "view"
+```{r}
+view(litters_df)
+#look at all the rows and columns
+```
+
+
+look at a data summary
+
+```{r}
+str(litters_df)
+#loog at the structure of the file data fram until you sort of get used to how r works
+
+skimr::skim(litters_df)
+```
 
