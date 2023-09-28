@@ -7,3 +7,78 @@ output: github_document
 library(tidyverse)
 ```
 
+Import FAS litters and pups
+
+```{r}
+litters_df=
+  read_csv("data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+
+pups_df=
+  read_csv("data/FAS_pups.csv")
+pups_df = janitor::clean_names(litters_df)
+```
+
+
+
+
+## `select`
+
+`select` is used to select colunms!
+
+```{r}
+select(litters_df, group, litter_number, gd0_weight)
+#this select function can get colunms in one data
+
+select(litters_df, group, gd0_weight:gd_of_birth)
+
+#when you want to select mutiply columns, you can use ":" to choose several columns, for example, from gd0_weight to gd_of_birth, and everything between these two columns are selected
+
+select(litters_df, group, starts_with("pups"))
+#keep all columns that start with some words, you can select all colums that start with pups using starts_with function
+
+select(litters_df, -litter_number)
+
+select(litters_df, -starts_with("gd"))
+
+#when using "-", you can subtract the columns that with -, like delete litter_number column, and those columns that start with gd
+
+select(litters_df, group, litter_id = litter_number)
+#this would rename columns, just use a new variable to be a variable, and this would only show this columns
+
+select(litters_df, group,litter_id = litter_number, everything())
+#based on the situation above, if you want to keep everything else in the data, you can add everything function
+
+select(litters_df, gd0_weight, everything())
+# I want gd0_weight (i want this to be the first column) and keep the other things that comes from after this
+```
+
+
+`select` vs `pull`
+
+```{r}
+select(litters_df, group)
+pull(litters_df, group)
+
+#select: put a data frame in, get a data frame out
+# pull: like break tidyverse logic by extracting a column from a data frame, and showing like a vector floating around, it doesn't exist inside of a data frame anyone
+
+# if you want to get something out of data or table, you can use pull.
+```
+```{r}
+rename(litters_df, litter_id = litter_number)
+#have the same effect that rename columns and then keep anything else
+
+relocate(litters_df, litter_number)
+#this function would bring litter_number first, and keep anything else
+```
+
+## learning assessment
+```{r}
+pups_df=
+  read_csv("data/FAS_pups.csv")
+pups_df = janitor::clean_names(pups_df)
+
+select(pups_df, litter_number, sex, pd_ears)
+```
+
