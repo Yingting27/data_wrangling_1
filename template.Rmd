@@ -3,4 +3,50 @@ title: "Simple document"
 output: github_document
 ---
 
-want to keep all things that in the same project, in this case, just create a new folder data within the same R folder and copy all import files into data folder
+```{r}
+library(tidyverse)
+#incluing several packages,like reader, ggplot....
+```
+
+
+want to keep all things that in the same project, in this case, just create a new folder data within the same R folder and copy all import files into data folder----make sure all the data files that are useful for project in the same folder
+
+let's import the `FAS_litters.cvs`csv using a relative path.
+
+```{r}
+litters_df=
+  read_csv("data/FAS_litters.csv")
+#readr package: sort by the library tidyverse, read_csv()functions;
+#the first thing: let function where to find this file
+
+#the paths show: when you just created a folder in your r project, this would show when you type its name
+#using this relative path would not change even you transfer folder to other places
+
+litters_df
+#do to check if this works
+
+litters_df = 
+  janitor::clean_names(litters_df)
+#in the cvs, there are spaces between names, but R cannot read them, we need to change names into snack_name
+#this code make all names into snack_name format
+
+#janior is a whole package in r, have bunch of functions in it
+
+```
+
+
+Import the same dataset using an absolute path.
+
+```{r}
+# problem: litters_df_abs=
+#  read_csv("~/R Project/p8105_data_wrangle_1/data/FAS_litters.cvs")
+#if you just use this absoluate path (when type and choose which folder that your data in), when you put the whole foler(include project and data into new folder,the path is changed, this would make mistake for this path)---get error(move folder)
+
+# litters_df_abs
+
+
+# litters_df_abs = 
+#  janitor::clean_names(litters_df_abs)
+```
+
+
