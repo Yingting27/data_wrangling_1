@@ -348,3 +348,42 @@ library(haven)
 pulse_df=
   read_sas("data/public_pulse_data.sas7bdat")
 ```
+
+## base R…
+
+don’t do this!!
+
+``` r
+#not to use dot when import file
+#like read.csv---not do that (suggetions)
+
+# and also when you want to select variable, like using $
+# litters_df$Gr--this would show you the columns (Group) automatically, but if you have other variable start with Gr, this would get you into trouble
+```
+
+## export data
+
+we have code that “cleans” data and need to export the result
+
+``` r
+litters_df_cleaned=
+  read_csv("data/FAS_litters.csv")
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+litters_df_cleaned=
+  janitor::clean_names(litters_df_cleaned)
+
+write_csv(litters_df_cleaned,"data/litters_cleaned.csv")
+
+#write_csv function can export cvs files, starting with what data call in R and the path you want to put into with the name you want called
+```
