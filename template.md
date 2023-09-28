@@ -322,3 +322,29 @@ litters_df
     ## # ℹ 39 more rows
     ## # ℹ 3 more variables: `Pups born alive` <dbl>, `Pups dead @ birth` <dbl>,
     ## #   `Pups survive` <dbl>
+
+## other file types
+
+import a xlsx file first
+
+``` r
+library(readxl)
+#reading xlsx file
+```
+
+``` r
+mlb_df=
+  read_excel("data/mlb11.xlsx")
+```
+
+import a SAS file
+
+``` r
+library(haven)
+#read SAS
+```
+
+``` r
+pulse_df=
+  read_sas("data/public_pulse_data.sas7bdat")
+```
