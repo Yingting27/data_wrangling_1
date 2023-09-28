@@ -38,8 +38,9 @@ litters_df =
 Import the same dataset using an absolute path.
 
 ```{r}
-# problem: litters_df_abs=
-#  read_csv("~/R Project/p8105_data_wrangle_1/data/FAS_litters.cvs")
+ litters_df_abs=
+  read_csv(file =" ./R Project/p8105_data_wrangle_1/data/FAS_litters.cvs")
+
 #if you just use this absoluate path (when type and choose which folder that your data in), when you put the whole foler(include project and data into new folder,the path is changed, this would make mistake for this path)---get error(move folder)
 
 # litters_df_abs
@@ -80,7 +81,7 @@ look at a data summary
 
 ```{r}
 str(litters_df)
-#loog at the structure of the file data fram until you sort of get used to how r works
+#look at the structure of the file data form until you sort of get used to how r works
 
 skimr::skim(litters_df)
 #gibe you some informations about data, with character and numeric variables---also give you what distribution looks like (histogram)
@@ -116,7 +117,7 @@ litters_df=
     "data/FAS_litters.csv",
     col_types = 
       cols(
-        Group = col_factor()
+        `GD0 weight` = col_factor()
         #which colums = types 
       ))
 #col_types is to change the types of column, like num>>>factor
