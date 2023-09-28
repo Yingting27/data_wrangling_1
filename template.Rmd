@@ -83,5 +83,44 @@ str(litters_df)
 #loog at the structure of the file data fram until you sort of get used to how r works
 
 skimr::skim(litters_df)
+#gibe you some informations about data, with character and numeric variables---also give you what distribution looks like (histogram)
+```
+
+## options in `read_*`
+
+```{r}
+litters_df=
+  read_csv(
+    "data/FAS_litters.csv",
+    skip = 10,col_names=FALSE)
+#col_names=FALSE: does not show any name in columns, only x1,x2,x3..
+```
+
+look at NA values:
+```{r}
+litters_df=
+  read_csv(
+    "data/FAS_litters.csv",
+    na = c("NA",19))
+
+#the data  na = c("NA",19)) means that when everytime see the 19, miss this number
+
+
+```
+
+
+column types
+```{r}
+litters_df=
+  read_csv(
+    "data/FAS_litters.csv",
+    col_types = 
+      cols(
+        Group = col_factor()
+        #which colums = types 
+      ))
+#col_types is to change the types of column, like num>>>factor
+litters_df
+
 ```
 
