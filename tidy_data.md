@@ -114,3 +114,55 @@ lotr_df =
 #but this data is not tidy--using the steps to tidy data
 #NOTICE: when using janitor::clean_names() function, all the names would become lower-case but not the capital, so you need to change Male and Female into lower-case one "male"
 ```
+
+## Revisit FAS
+
+``` r
+litters_df = 
+  read_csv("data/FAS_litters.csv") |> 
+  janitor::clean_names() |> 
+  mutate(wt_gain = gd18_weight - gd0_weight) |> 
+  select(litter_number, group, wt_gain) |> 
+  separate(group, into = c("does","day_of_tx"),3)
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+#now, there are two variables, Con 7 & Con 8 in one group---got a group column and need to separate it---using separate function(what do you wan to separate)
+
+#"does","day_of_tx" these are new variable names;where do you want to split, they all have 3 characters
+
+pups_df = 
+  read_csv("data/FAS_pups.csv") |> 
+  janitor::clean_names() |> 
+  mutate(
+    sex = case_match(
+      sex,
+      1 ~ "male",
+      2 ~ "female"
+    )
+  )
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+fas_df = 
+  left_join(pups_df,litters_df, by = "litter_number")
+#merge two separate columns and put two tables together
+```
