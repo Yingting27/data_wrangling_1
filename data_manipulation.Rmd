@@ -144,3 +144,18 @@ mutate(
   group = str_to_lower(group))
 ```
 
+## `arrange`
+
+```{r}
+arrange(litters_df, gd0_weight)
+arrange(litters_df, group, gd0_weight)
+#if the data is not in an organized way, use the arrange to make data more easy to read---wouldn change anything
+
+#this would become con7-con8 and low7-low8 more organized.
+```
+
+## pipes
+```{r}
+
+```
+
