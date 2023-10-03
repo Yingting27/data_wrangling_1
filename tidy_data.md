@@ -39,3 +39,78 @@ pulse_df=
 
 #2. comparing the table before format and after format, we can see that there is a new column (variable) called "visit" and there are bunch of values in this column which are bdi_score_bl:bdi_score_12m
 ```
+
+## learning assessment
+
+import / lengthen the litters dataset
+
+``` r
+litters_data = 
+  read_csv("data/FAS_litters.csv") |> 
+  janitor::clean_names() |> 
+  select(litter_number, gd0_weight,gd18_weight) |> 
+  pivot_longer(
+    gd0_weight:gd18_weight,
+    names_to = "gd",
+    values_to = "weight",
+    names_prefix = "gd"
+  ) |> 
+  mutate(
+    gd = case_match(
+      gd, 
+      "0_weight"~ 0,
+      "18_weight" ~18,
+      )
+  )
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+#case_match function:got multiply things in this variable that need to replace, "0_weight"~ 0 means that when you see 0_weight, this would be changed into 0, the same with replacing to 18
+
+#1.reading in the data; 2. cleaning up the names; 3.selecting only the columns that we need to have
+
+#tidy step: new step today: pivot_longer function going wide format to long format---saying what columns need to get, names_to function: what a new column that need to be created as new variable and the name of it, values_to function: the values that would be in the column, what is that called
+```
+
+## LoTR
+
+import LoTR words data
+
+``` r
+fellowship_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "B3:D6") |> mutate(movie = "fellowship")
+
+two_towers_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "F3:H6") |> mutate(movie = "two towers")
+
+return_of_the_king_df = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "J3:L6") |> mutate(movie = "return of the king")
+
+#you can specify which columns you want to put in, you can use range function. For example, when using range with "B3:D6", this can show the first table that in the excel
+
+#in these three tables, we have the same columns but with different movies, so if we want to put all tables together, this would lose the title of the movie. we can use mutate function to create/change a new variable related to movie.
+
+lotr_df = 
+  bind_rows(fellowship_df,two_towers_df,return_of_the_king_df) |>
+  janitor::clean_names() |> 
+  pivot_longer(
+    male:female,
+    names_to = "gender",
+    values_to = "word"
+  ) |> 
+  relocate(movie)
+
+#bind_rows function: combine all the things together
+
+#but this data is not tidy--using the steps to tidy data
+#NOTICE: when using janitor::clean_names() function, all the names would become lower-case but not the capital, so you need to change Male and Female into lower-case one "male"
+```
