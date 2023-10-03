@@ -703,3 +703,35 @@ arrange(litters_df, group, gd0_weight)
 ```
 
 ## pipes
+
+``` r
+# %>% and |> are both pipes
+
+litter_df = 
+  read_csv("data/FAS_litters.csv") |> 
+  janitor::clean_names() |> 
+  select(-starts_with("pups")) |> 
+  mutate(
+    group = str_to_lower(group),
+    wt_gain = gd18_weight - gd0_weight,
+  ) |> 
+  drop_na(wt_gain) |> 
+  arrange(group, wt_gain)
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+# apply the pipe, you dont need to use the data name again like litter_df = janitor..., you can do all the things at the same time with using data frame in only one data name "litter_df" sentence
+
+#if you highlight this whole chunk starting with litter_df, this would save in the dataset.
+
+#you can know what the whole syntaxs are doing at the same time as "pipes" put all the things together, and once you can change individual at any time, the other would not be affected or need to change.
+```
